@@ -16,7 +16,7 @@ class MealDetails extends StatelessWidget {
         return( Container(
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
               height: 200,
-              width: 250,
+              width: 300,
               decoration:BoxDecoration(
                 border: Border.all(width: 1,
                 color: Colors.grey),
@@ -74,7 +74,7 @@ class MealDetails extends StatelessWidget {
                     (
                       color: Theme.of(context).accentColor,
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(mealDetails.steps[index]),
                       )),
                   );

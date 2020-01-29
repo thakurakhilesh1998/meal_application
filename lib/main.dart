@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/screens/TabBarScreen.dart';
+import 'package:meal_app/screens/favourite_meal_screen.dart';
 import './screens/category_screen.dart';
 import './screens/category_meal_screen.dart';
 import './screens/meal_detaits_screen.dart';
@@ -28,10 +30,11 @@ class MyApp extends StatelessWidget {
         )
 
       ),
-      home: Category(),
       routes: {
+        '/':(ctx) => TabBarScreen(), 
         CategoryMealScreen.MEALSCREEN:(ctx) => CategoryMealScreen(),
         MealDetails.MealDetailsRoute:(ctx)=>MealDetails(),
+        FavouriteMealScreen.FavouriteMealRoute:(ctx) =>FavouriteMealScreen(),
         
       },
       //this function calls when there is no any page to show by the flutter .
