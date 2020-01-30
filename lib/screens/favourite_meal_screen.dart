@@ -3,6 +3,9 @@ import 'package:meal_app/widgets/mainDrawer.dart';
 
 class FavouriteMealScreen extends StatefulWidget {
 
+  final Function setFilteredData;
+  final Map<String,bool> filters;
+  FavouriteMealScreen(this.filters,this.setFilteredData);
   static const FavouriteMealRoute="/favouriteMeal";
 
   @override
@@ -11,23 +14,27 @@ class FavouriteMealScreen extends StatefulWidget {
 
 class _FavouriteMealScreenState extends State<FavouriteMealScreen> {
 
-  var isGlutenFree=false;
-  var isLactoseFree=false;
-  var isVegan=false;
-  var isVegetarian=false;
-  Widget switchButton(String title,String descrition,bool ckheckValue)
+  bool isGlutenFree=false;
+  bool isLactoseFree=false;
+  bool isVegan=false;
+  bool isVegetarian=false;
+  @override 
+ initState()
+ {
+   isGlutenFree=widget.filters['gluten'];
+   isVegetarian=widget.filters['vegetarian'];
+   isVegan=widget.filters['vegan'];
+   isLactoseFree=widget.filters['lactose'];
+   super.initState();
+ }
+  Widget switchButton(String title,String descrition,bool ckheckValue,Function updateValue)
   {
 return ( 
   SwitchListTile(
                   value:ckheckValue,
                   title: Text(title),
                   subtitle: Text(descrition),
-                  onChanged: (value)
-                  {
-                    setState(() {
-                      ckheckValue=value;
-                    });
-                  },
+                  onChanged: updateValue,
                  ));
   }
   @override
@@ -35,7 +42,19 @@ return (
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text("Favourite Colour"),
+        title: Text("Favourite Meal"),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.save),
+          onPressed: (){
+            final selectedFilters={
+                       'gluten': isGlutenFree,
+                      'lactose': isLactoseFree,
+                      'vegan': isVegan,
+                      'vegetarian': isVegetarian,
+            };
+             widget.setFilteredData(selectedFilters);          
+          },)
+        ],
       ),
       drawer: MainDrawer(),
       body:Column(
@@ -48,10 +67,32 @@ return (
             Expanded(
                 child:ListView(
                children: <Widget>[
-                switchButton('Gluten-Free','Only Gluten Free Meal', isGlutenFree),
-                switchButton('Lactose-Free','Only Lactose Free Meal', isLactoseFree),
-                switchButton('Vegan-Free','Only Vegan Free Meal', isVegan),
-                switchButton('Vegeterian','Only Vegeterian Meal', isVegetarian),
+                switchButton('Gluten-Free','Only Gluten Free Meal', isGlutenFree,
+                (newValue)
+                {
+                  setState(() {
+                  isGlutenFree=newValue;
+                  });
+                }),
+                switchButton('Lactose-Free','Only Lactose Free Meal', isLactoseFree,
+                (newValue)
+                {
+                  setState(() {
+                    isLactoseFree=newValue;
+                  });
+                }),
+                switchButton('Vegan-Free','Only Vegan Free Meal', isVegan,
+                (newValue)
+                {
+                  setState(() {
+                    isVegan=newValue;
+                  });
+                }),
+                switchButton('Vegeterian','Only Vegeterian Meal', isVegetarian,
+                (newValue)
+                {
+                  isVegetarian=newValue;
+                }),
                ],
                 ),
             ),

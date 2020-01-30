@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/dummy-data.dart';
 
-class MealDetails extends StatelessWidget {
+class MealDetails extends StatefulWidget {
+  final Function isFavourite;
+  final toggleFavourite;
+  MealDetails(this.toggleFavourite,this.isFavourite);
   static const MealDetailsRoute='/Meal-DetailsRoute';
+
+  @override
+  _MealDetailsState createState() => _MealDetailsState();
+}
+
+class _MealDetailsState extends State<MealDetails> {
  Widget conayinerTitle(BuildContext context,String title)
  {
       return (Container(
@@ -11,6 +20,7 @@ class MealDetails extends StatelessWidget {
           ));
 
  }
+
   Widget listDataBuilder(Widget child)
               {
         return( Container(
@@ -25,6 +35,7 @@ class MealDetails extends StatelessWidget {
               child:child,
             ));
  }
+
   @override
   Widget build(BuildContext context) {
      final mealId=ModalRoute.of(context).settings.arguments;
@@ -84,7 +95,18 @@ class MealDetails extends StatelessWidget {
               ),
           ],
         ),
-      )
+      ),
+      floatingActionButtonLocation:FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()
+        {
+          widget.toggleFavourite(mealId);
+        },
+        child:
+        widget.isFavourite(mealId) ? 
+        Icon(Icons.star)
+        : Icon(Icons.star_border)
+      ),
     );
   }
 }

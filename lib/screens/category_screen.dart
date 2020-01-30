@@ -9,7 +9,9 @@ class Category extends StatelessWidget {
 
       children:DUMMY_CATEGORIES.map((cat)
       {
-        return CategoryItem(cat.id,cat.title,cat.color);
+        return CategoryItem(cat.id,
+        cat.title,
+        cat.color);
       }).toList(),
       gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 200,
       childAspectRatio: 3/2,
